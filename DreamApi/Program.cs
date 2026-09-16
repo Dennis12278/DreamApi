@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<AnotacaoService>();
-
+builder.Services.AddSingleton<UsuarioService>();
+builder.Services.AddSingleton<DocumentoService>();
+builder.Services.AddSingleton<TipoDocumentoService>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
