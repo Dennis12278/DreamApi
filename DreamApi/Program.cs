@@ -10,6 +10,11 @@ builder.Services.AddSingleton<AnotacaoService>();
 builder.Services.AddSingleton<UsuarioService>();
 builder.Services.AddSingleton<DocumentoService>();
 builder.Services.AddSingleton<TipoDocumentoService>();
+builder.Services.AddSingleton<GrupoService>();
+builder.Services.AddSingleton<GrupoUsuarioService>();
+builder.Services.AddSingleton<CompartilhamentoService>();
+
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
