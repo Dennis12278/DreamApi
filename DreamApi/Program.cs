@@ -13,6 +13,8 @@ builder.Services.AddSingleton<TipoDocumentoService>();
 builder.Services.AddSingleton<GrupoService>();
 builder.Services.AddSingleton<GrupoUsuarioService>();
 builder.Services.AddSingleton<CompartilhamentoService>();
+builder.Services.AddSingleton<NotificacaoService>();
+builder.Services.AddSingleton<CalendarioService>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
