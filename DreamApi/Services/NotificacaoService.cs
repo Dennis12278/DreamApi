@@ -28,6 +28,17 @@ namespace DreamApi.Services
             }
         }
 
+        public void Ler(int id)
+        {
+            Notificacao notificacao = notificacoes.Find(n => n.Id == id);
+
+            if (notificacao != null)
+            {
+                notificacao.Status = "lida";
+                notificacao.DataUltimaAcao = DateTime.Now;
+            }
+        }
+
         public void Excluir(int id)
         {
             Notificacao notificacao = notificacoes.Find(n => n.Id == id);

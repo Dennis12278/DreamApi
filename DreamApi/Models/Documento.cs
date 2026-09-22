@@ -7,5 +7,9 @@
         public int IdTipoDocumento { get; set; }
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
+        public bool Revisado { get; set; }
+        public bool Publicado { get; set; }
+        public string Visibilidade { get; set; }
+        public DateTime DataPublicacao { get; set; }
     }
 }

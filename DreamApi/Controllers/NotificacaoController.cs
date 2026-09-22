@@ -33,6 +33,12 @@ namespace DreamApi.Controllers
             notificacaoService.Editar(notificacao);
         }
 
+        [HttpPut("Ler/{id}")]
+        public void Ler(int id)
+        {
+            notificacaoService.Ler(id);
+        }
+
         [HttpDelete("{id}")]
         public void Excluir(int id)
         {

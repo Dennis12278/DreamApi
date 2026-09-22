@@ -26,6 +26,31 @@ namespace DreamApi.Services
                 documentoExistente.IdTipoDocumento = documento.IdTipoDocumento;
                 documentoExistente.Titulo = documento.Titulo;
                 documentoExistente.Conteudo = documento.Conteudo;
+                documentoExistente.Revisado = documento.Revisado;
+                documentoExistente.Publicado = documento.Publicado;
+                documentoExistente.Visibilidade = documento.Visibilidade;
+                documentoExistente.DataPublicacao = documento.DataPublicacao;
+            }
+        }
+
+        public void Revisar(int id)
+        {
+            Documento documento = documentos.Find(d => d.Id == id);
+
+            if (documento != null)
+            {
+                documento.Revisado = true;
+            }
+        }
+
+        public void Publicar(int id)
+        {
+            Documento documento = documentos.Find(d => d.Id == id);
+
+            if (documento != null)
+            {
+                documento.Publicado = true;
+                documento.DataPublicacao = DateTime.Now;
             }
         }
 

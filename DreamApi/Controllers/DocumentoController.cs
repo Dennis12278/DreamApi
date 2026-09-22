@@ -33,6 +33,18 @@ namespace DreamApi.Controllers
             documentoService.Editar(documento);
         }
 
+        [HttpPut("Revisar/{id}")]
+        public void Revisar(int id)
+        {
+            documentoService.Revisar(id);
+        }
+
+        [HttpPut("Publicar/{id}")]
+        public void Publicar(int id)
+        {
+            documentoService.Publicar(id);
+        }
+
         [HttpDelete("{id}")]
         public void Excluir(int id)
         {
