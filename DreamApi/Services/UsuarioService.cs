@@ -1,40 +1,52 @@
-﻿using DreamApi.Models;
+﻿
+using DreamApi.Models;
+using DreamApi.Data;
 
 namespace DreamApi.Services
 {
     public class UsuarioService
     {
-        private List<Usuario> usuarios = new List<Usuario>();
+        private readonly DreamDbContext _context;
+
+        public UsuarioService(DreamDbContext context)
+        {
+            _context = context;
+        }
 
         public List<Usuario> Listar()
         {
-            return usuarios;
+            return _context.Usuarios.ToList();
         }
 
         public void Adicionar(Usuario usuario)
         {
-            usuarios.Add(usuario);
+            _context.Usuarios.Add(usuario);
+            _context.SaveChanges();
         }
 
         public void Editar(Usuario usuario)
         {
-            Usuario usuarioExistente = usuarios.Find(u => u.Id == usuario.Id);
+            Usuario usuarioExistente = _context.Usuarios
+                .Find(usuario.Id);
 
             if (usuarioExistente != null)
             {
                 usuarioExistente.Nome = usuario.Nome;
                 usuarioExistente.Email = usuario.Email;
                 usuarioExistente.Senha = usuario.Senha;
+
+                _context.SaveChanges();
             }
         }
 
         public void Excluir(int id)
         {
-            Usuario usuario = usuarios.Find(u => u.Id == id);
+            Usuario usuario = _context.Usuarios.Find(id);
 
             if (usuario != null)
             {
-                usuarios.Remove(usuario);
+                _context.Usuarios.Remove(usuario);
+                _context.SaveChanges();
             }
         }
     }

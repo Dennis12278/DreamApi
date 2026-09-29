@@ -1,13 +1,22 @@
+
 using Scalar.AspNetCore;
 using DreamApi.Services;
+using DreamApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<DreamDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ConexaoDream")));
+
+// Serviços atuais
 builder.Services.AddSingleton<AnotacaoService>();
-builder.Services.AddSingleton<UsuarioService>();
+builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddSingleton<DocumentoService>();
 builder.Services.AddSingleton<TipoDocumentoService>();
 builder.Services.AddSingleton<GrupoService>();
@@ -16,8 +25,6 @@ builder.Services.AddSingleton<CompartilhamentoService>();
 builder.Services.AddSingleton<NotificacaoService>();
 builder.Services.AddSingleton<CalendarioService>();
 
-
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
