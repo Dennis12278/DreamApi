@@ -1,40 +1,50 @@
-﻿using DreamApi.Models;
+﻿using DreamApi.Data;
+using DreamApi.Models;
 
 namespace DreamApi.Services
 {
     public class CompartilhamentoService
     {
-        private List<Compartilhamento> compartilhamentos = new List<Compartilhamento>();
+        private DreamDbContext context;
+
+        public CompartilhamentoService(DreamDbContext context)
+        {
+            this.context = context;
+        }
 
         public List<Compartilhamento> Listar()
         {
-            return compartilhamentos;
+            return context.Compartilhamentos.ToList();
         }
 
         public void Adicionar(Compartilhamento compartilhamento)
         {
-            compartilhamentos.Add(compartilhamento);
+            context.Compartilhamentos.Add(compartilhamento);
+            context.SaveChanges();
         }
 
         public void Editar(Compartilhamento compartilhamento)
         {
-            Compartilhamento compartilhamentoExistente = compartilhamentos.Find(c => c.Id == compartilhamento.Id);
+            Compartilhamento compartilhamentoExistente = context.Compartilhamentos.Find(compartilhamento.Id);
 
             if (compartilhamentoExistente != null)
             {
                 compartilhamentoExistente.IdDocumento = compartilhamento.IdDocumento;
                 compartilhamentoExistente.IdGrupo = compartilhamento.IdGrupo;
                 compartilhamentoExistente.DataUltimaAcao = compartilhamento.DataUltimaAcao;
+
+                context.SaveChanges();
             }
         }
 
         public void Excluir(int id)
         {
-            Compartilhamento compartilhamento = compartilhamentos.Find(c => c.Id == id);
+            Compartilhamento compartilhamento = context.Compartilhamentos.Find(id);
 
             if (compartilhamento != null)
             {
-                compartilhamentos.Remove(compartilhamento);
+                context.Compartilhamentos.Remove(compartilhamento);
+                context.SaveChanges();
             }
         }
     }

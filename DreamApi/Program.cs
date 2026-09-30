@@ -15,15 +15,15 @@ builder.Services.AddDbContext<DreamDbContext>(options =>
         builder.Configuration.GetConnectionString("ConexaoDream")));
 
 // Serviços atuais
-builder.Services.AddSingleton<AnotacaoService>();
+builder.Services.AddScoped<AnotacaoService>();
 builder.Services.AddScoped<UsuarioService>();
-builder.Services.AddSingleton<DocumentoService>();
-builder.Services.AddSingleton<TipoDocumentoService>();
-builder.Services.AddSingleton<GrupoService>();
-builder.Services.AddSingleton<GrupoUsuarioService>();
-builder.Services.AddSingleton<CompartilhamentoService>();
-builder.Services.AddSingleton<NotificacaoService>();
-builder.Services.AddSingleton<CalendarioService>();
+builder.Services.AddScoped<DocumentoService>();
+builder.Services.AddScoped<TipoDocumentoService>();
+builder.Services.AddScoped<GrupoService>();
+builder.Services.AddScoped<GrupoUsuarioService>();
+builder.Services.AddScoped<CompartilhamentoService>();
+builder.Services.AddScoped<NotificacaoService>();
+builder.Services.AddScoped<CalendarioService>();
 
 builder.Services.AddOpenApi();
 

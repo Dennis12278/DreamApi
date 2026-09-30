@@ -1,38 +1,48 @@
-﻿using DreamApi.Models;
+﻿using DreamApi.Data;
+using DreamApi.Models;
 
 namespace DreamApi.Services
 {
     public class TipoDocumentoService
     {
-        private List<TipoDocumento> tipos = new List<TipoDocumento>();
+        private DreamDbContext context;
+
+        public TipoDocumentoService(DreamDbContext context)
+        {
+            this.context = context;
+        }
 
         public List<TipoDocumento> Listar()
         {
-            return tipos;
+            return context.TiposDocumento.ToList();
         }
 
         public void Adicionar(TipoDocumento tipo)
         {
-            tipos.Add(tipo);
+            context.TiposDocumento.Add(tipo);
+            context.SaveChanges();
         }
 
         public void Editar(TipoDocumento tipo)
         {
-            TipoDocumento tipoExistente = tipos.Find(t => t.Id == tipo.Id);
+            TipoDocumento tipoExistente = context.TiposDocumento.Find(tipo.Id);
 
             if (tipoExistente != null)
             {
                 tipoExistente.Nome = tipo.Nome;
+
+                context.SaveChanges();
             }
         }
 
         public void Excluir(int id)
         {
-            TipoDocumento tipo = tipos.Find(t => t.Id == id);
+            TipoDocumento tipo = context.TiposDocumento.Find(id);
 
             if (tipo != null)
             {
-                tipos.Remove(tipo);
+                context.TiposDocumento.Remove(tipo);
+                context.SaveChanges();
             }
         }
     }

@@ -1,24 +1,31 @@
-﻿using DreamApi.Models;
+﻿using DreamApi.Data;
+using DreamApi.Models;
 
 namespace DreamApi.Services
 {
     public class DocumentoService
     {
-        private List<Documento> documentos = new List<Documento>();
+        private DreamDbContext context;
+
+        public DocumentoService(DreamDbContext context)
+        {
+            this.context = context;
+        }
 
         public List<Documento> Listar()
         {
-            return documentos;
+            return context.Documentos.ToList();
         }
 
         public void Adicionar(Documento documento)
         {
-            documentos.Add(documento);
+            context.Documentos.Add(documento);
+            context.SaveChanges();
         }
 
         public void Editar(Documento documento)
         {
-            Documento documentoExistente = documentos.Find(d => d.Id == documento.Id);
+            Documento documentoExistente = context.Documentos.Find(documento.Id);
 
             if (documentoExistente != null)
             {
@@ -30,37 +37,43 @@ namespace DreamApi.Services
                 documentoExistente.Publicado = documento.Publicado;
                 documentoExistente.Visibilidade = documento.Visibilidade;
                 documentoExistente.DataPublicacao = documento.DataPublicacao;
+
+                context.SaveChanges();
             }
         }
 
         public void Revisar(int id)
         {
-            Documento documento = documentos.Find(d => d.Id == id);
+            Documento documento = context.Documentos.Find(id);
 
             if (documento != null)
             {
                 documento.Revisado = true;
+                context.SaveChanges();
             }
         }
 
         public void Publicar(int id)
         {
-            Documento documento = documentos.Find(d => d.Id == id);
+            Documento documento = context.Documentos.Find(id);
 
             if (documento != null)
             {
                 documento.Publicado = true;
                 documento.DataPublicacao = DateTime.Now;
+
+                context.SaveChanges();
             }
         }
 
         public void Excluir(int id)
         {
-            Documento documento = documentos.Find(d => d.Id == id);
+            Documento documento = context.Documentos.Find(id);
 
             if (documento != null)
             {
-                documentos.Remove(documento);
+                context.Documentos.Remove(documento);
+                context.SaveChanges();
             }
         }
     }

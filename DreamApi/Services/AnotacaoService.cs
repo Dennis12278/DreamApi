@@ -1,41 +1,50 @@
-﻿using DreamApi.Models;
+﻿using DreamApi.Data;
+using DreamApi.Models;
 
 namespace DreamApi.Services
 {
     public class AnotacaoService
     {
-        private List<Anotacao> anotacoes = new List<Anotacao>();
+        private DreamDbContext context;
+
+        public AnotacaoService(DreamDbContext context)
+        {
+            this.context = context;
+        }
 
         public List<Anotacao> Listar()
         {
-            return anotacoes;
+            return context.Anotacoes.ToList();
         }
 
         public void Adicionar(Anotacao anotacao)
         {
-            anotacoes.Add(anotacao);
+            context.Anotacoes.Add(anotacao);
+            context.SaveChanges();
         }
 
         public void Editar(Anotacao anotacao)
         {
-            Anotacao anotacaoExistente = anotacoes.Find(a => a.Id == anotacao.Id);
+            Anotacao anotacaoExistente = context.Anotacoes.Find(anotacao.Id);
 
             if (anotacaoExistente != null)
             {
                 anotacaoExistente.Titulo = anotacao.Titulo;
                 anotacaoExistente.Texto = anotacao.Texto;
+
+                context.SaveChanges();
             }
         }
 
         public void Excluir(int id)
         {
-            Anotacao anotacao = anotacoes.Find(a => a.Id == id);
+            Anotacao anotacao = context.Anotacoes.Find(id);
 
             if (anotacao != null)
             {
-                anotacoes.Remove(anotacao);
+                context.Anotacoes.Remove(anotacao);
+                context.SaveChanges();
             }
         }
     }
-
 }

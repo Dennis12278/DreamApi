@@ -1,5 +1,4 @@
-﻿
-using DreamApi.Models;
+﻿using DreamApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DreamApi.Data

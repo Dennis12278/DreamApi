@@ -1,51 +1,63 @@
-﻿using DreamApi.Models;
+﻿using DreamApi.Data;
+using DreamApi.Models;
 
 namespace DreamApi.Services
 {
     public class NotificacaoService
     {
-        private List<Notificacao> notificacoes = new List<Notificacao>();
+        private DreamDbContext context;
+
+        public NotificacaoService(DreamDbContext context)
+        {
+            this.context = context;
+        }
 
         public List<Notificacao> Listar()
         {
-            return notificacoes;
+            return context.Notificacoes.ToList();
         }
 
         public void Adicionar(Notificacao notificacao)
         {
-            notificacoes.Add(notificacao);
+            context.Notificacoes.Add(notificacao);
+            context.SaveChanges();
         }
 
         public void Editar(Notificacao notificacao)
         {
-            Notificacao notificacaoExistente = notificacoes.Find(n => n.Id == notificacao.Id);
+            Notificacao notificacaoExistente = context.Notificacoes.Find(notificacao.Id);
 
             if (notificacaoExistente != null)
             {
                 notificacaoExistente.Mensagem = notificacao.Mensagem;
                 notificacaoExistente.Status = notificacao.Status;
                 notificacaoExistente.DataUltimaAcao = notificacao.DataUltimaAcao;
+
+                context.SaveChanges();
             }
         }
 
         public void Ler(int id)
         {
-            Notificacao notificacao = notificacoes.Find(n => n.Id == id);
+            Notificacao notificacao = context.Notificacoes.Find(id);
 
             if (notificacao != null)
             {
                 notificacao.Status = "lida";
                 notificacao.DataUltimaAcao = DateTime.Now;
+
+                context.SaveChanges();
             }
         }
 
         public void Excluir(int id)
         {
-            Notificacao notificacao = notificacoes.Find(n => n.Id == id);
+            Notificacao notificacao = context.Notificacoes.Find(id);
 
             if (notificacao != null)
             {
-                notificacoes.Remove(notificacao);
+                context.Notificacoes.Remove(notificacao);
+                context.SaveChanges();
             }
         }
     }

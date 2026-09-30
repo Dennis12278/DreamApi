@@ -1,39 +1,49 @@
-﻿using DreamApi.Models;
+﻿using DreamApi.Data;
+using DreamApi.Models;
 
 namespace DreamApi.Services
 {
     public class GrupoService
     {
-        private List<Grupo> grupos = new List<Grupo>();
+        private DreamDbContext context;
+
+        public GrupoService(DreamDbContext context)
+        {
+            this.context = context;
+        }
 
         public List<Grupo> Listar()
         {
-            return grupos;
+            return context.Grupos.ToList();
         }
 
         public void Adicionar(Grupo grupo)
         {
-            grupos.Add(grupo);
+            context.Grupos.Add(grupo);
+            context.SaveChanges();
         }
 
         public void Editar(Grupo grupo)
         {
-            Grupo grupoExistente = grupos.Find(g => g.Id == grupo.Id);
+            Grupo grupoExistente = context.Grupos.Find(grupo.Id);
 
             if (grupoExistente != null)
             {
                 grupoExistente.Nome = grupo.Nome;
                 grupoExistente.Descricao = grupo.Descricao;
+
+                context.SaveChanges();
             }
         }
 
         public void Excluir(int id)
         {
-            Grupo grupo = grupos.Find(g => g.Id == id);
+            Grupo grupo = context.Grupos.Find(id);
 
             if (grupo != null)
             {
-                grupos.Remove(grupo);
+                context.Grupos.Remove(grupo);
+                context.SaveChanges();
             }
         }
     }
