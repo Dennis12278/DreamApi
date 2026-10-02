@@ -10,6 +10,6 @@
         public bool Revisado { get; set; }
         public bool Publicado { get; set; }
         public string Visibilidade { get; set; }
-        public DateTime DataPublicacao { get; set; }
+        public DateTime? DataPublicacao { get; set; }
     }
 }
