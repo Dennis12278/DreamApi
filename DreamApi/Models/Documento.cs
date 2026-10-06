@@ -11,5 +11,6 @@
         public bool Publicado { get; set; }
         public string Visibilidade { get; set; }
         public DateTime? DataPublicacao { get; set; }
+        public string? Capa { get; set; }
     }
 }

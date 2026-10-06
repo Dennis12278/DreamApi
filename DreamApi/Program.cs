@@ -1,4 +1,3 @@
-
 using Scalar.AspNetCore;
 using DreamApi.Services;
 using DreamApi.Data;
@@ -9,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirSite", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddDbContext<DreamDbContext>(options =>
     options.UseSqlServer(
@@ -36,7 +45,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("PermitirSite");
 
 app.UseAuthorization();
 
