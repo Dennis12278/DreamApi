@@ -22,7 +22,6 @@ namespace DreamApi.Services
             context.Documentos.Add(documento);
             context.SaveChanges();
         }
-
         public void Editar(Documento documento)
         {
             Documento documentoExistente = context.Documentos.Find(documento.Id);
